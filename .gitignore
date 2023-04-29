@@ -1,0 +1,4 @@
+# Project exclude paths
+/delivery/delivery-application/target/
+/delivery/delivery-domain/target/
+/delivery/delivery-infrastructure/target/
