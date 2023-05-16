@@ -4,7 +4,7 @@ CREATE TABLE customers (
                            last_name VARCHAR(50) NOT NULL,
                            email VARCHAR(100) NOT NULL,
                            phone VARCHAR(20) NOT NULL,
-                           address VARCHAR(200) NOT NULL
+                           addressDomain VARCHAR(200) NOT NULL
 );
 CREATE TABLE addresses (
                            address_id INT PRIMARY KEY AUTO_INCREMENT,

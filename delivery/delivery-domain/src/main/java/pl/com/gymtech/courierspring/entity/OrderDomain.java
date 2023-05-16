@@ -3,7 +3,6 @@ package pl.com.gymtech.courierspring.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "orders")
@@ -11,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Order {
+public class OrderDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +32,8 @@ public class Order {
     @Column(name = "package_size", nullable = false)
     private String packageSize;
 
-    @Column(name = "delivery_date", nullable = false)
-    private Date deliveryDate;
-
-    @Column(name = "status", nullable = false)
-    private String status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shipment_id", referencedColumnName = "shipment_id")
+    private ShipmentDomain shipmentDomain;
 
 }

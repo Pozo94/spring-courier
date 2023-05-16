@@ -3,3 +3,5 @@
 /delivery/delivery-domain/target/
 /delivery/delivery-infrastructure/target/
 /.idea
+/delivery/delivery-application/.openapi-generator
+*.iml

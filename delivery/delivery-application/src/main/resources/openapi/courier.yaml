@@ -1,0 +1,402 @@
+openapi: "3.0.0"
+info:
+  title: "Courier API"
+  version: "1.0.0"
+paths:
+  /addresses:
+    get:
+      summary: Pobierz wszystkie adresy
+      responses:
+        '200':
+          description: Lista adresów
+    post:
+      summary: Dodaj nowy adres
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Address"
+      responses:
+        '201':
+          description: Adres został dodany
+  /addresses/{id}:
+    get:
+      summary: Pobierz adres o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator adresu do pobrania
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Szczegóły adresu
+        '404':
+          description: Nie znaleziono adresu o podanym identyfikatorze
+    put:
+      summary: Zaktualizuj adres o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator adresu do zaktualizowania
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Address"
+      responses:
+        '200':
+          description: Adres został zaktualizowany
+        '404':
+          description: Nie znaleziono adresu o podanym identyfikatorze
+    delete:
+      summary: Usuń adres o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator adresu do usunięcia
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Adres został usunięty
+        '404':
+          description: Nie znaleziono adresu o podanym identyfikatorze
+  /customers:
+    get:
+      summary: Pobierz wszystkich klientów
+      responses:
+        '200':
+          description: Lista klientów
+    post:
+      summary: Dodaj nowego klienta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        '201':
+          description: Klient został dodany
+  /customers/{id}:
+    get:
+      summary: Pobierz klienta o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator klienta do pobrania
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Szczegóły klienta
+        '404':
+          description: Nie znaleziono
+    put:
+      summary: Zaktualizuj adres o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator adresu do zaktualizowania
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        '200':
+          description: Klient został zaktualizowany
+        '404':
+          description: Nie znaleziono klienta o podanym identyfikatorze
+    delete:
+      summary: Usuń klienta o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          description: Identyfikator klienta do usunięcia
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Klient został usunięty
+        '404':
+          description: Nie znaleziono klienta o podanym identyfikatorze
+  /orders:
+    get:
+      summary: Pobierz wszystkie zamówienia
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Dodaj nowe zamówienie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Stworzono
+
+  /orders/{id}:
+    get:
+      summary: Pobierz zamówienie o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identyfikator zamówienia
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Nie znaleziono zamówienia o podanym identyfikatorze
+    put:
+      summary: Zaktualizuj zamówienie o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identyfikator zamówienia
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Nie znaleziono zamówienia o podanym identyfikatorze
+    delete:
+      summary: Usuń zamówienie o określonym identyfikatorze
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identyfikator zamówienia
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Usunięto
+        '404':
+          description: Nie znaleziono zamówienia o podanym identyfikatorze
+  /customers/{id}/orders:
+    get:
+      summary: Pobierz wszystkie zamówienia użytkownika
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identyfikator użytkownika
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Nie znaleziono klienta o podanym identyfikatorze
+  /drivers:
+    get:
+      summary: Pobierz wszystkich kierowców
+      responses:
+        '200':
+          description: Lista wszystkich kierowców
+    post:
+      summary: Dodaj nowego kierowcę
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Kierowca został dodany
+        '400':
+          description: Nieprawidłowe dane kierowcy
+  /drivers/{id}:
+    get:
+      summary: Pobierz kierowcę o określonym identyfikatorze
+      parameters:
+        - in: path
+          name: id
+          description: Identyfikator kierowcy
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Szczegóły kierowcy
+        '404':
+          description: Kierowca o podanym identyfikatorze nie istnieje
+    put:
+      summary: Zaktualizuj kierowcę o określonym identyfikatorze
+      parameters:
+        - in: path
+          name: id
+          description: Identyfikator kierowcy
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Driver'
+      responses:
+        '200':
+          description: Kierowca został zaktualizowany
+        '400':
+          description: Nieprawidłowe dane kierowcy
+        '404':
+          description: Kierowca o podanym identyfikatorze nie istnieje
+    delete:
+      summary: Usuń kierowcę o określonym identyfikatorze
+      parameters:
+        - in: path
+          name: id
+          description: Identyfikator kierowcy
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Kierowca został usunięty
+        '404':
+          description: Kierowca o podanym identyfikatorze nie istnieje
+  /orders/{orderId}/shipment:
+    get:
+      summary: Śledzenie przesyłki zamówienia o określonym identyfikatorze
+      parameters:
+        - in: path
+          name: orderId
+          description: Identyfikator zamówienia
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Szczegóły przesyłki
+        '404':
+          description: Zamówienie o podanym identyfikatorze nie istnieje
+    put:
+      summary: Aktualizuj dane przesyłki zamówienia
+      parameters:
+        - in: path
+          name: orderId
+          description: Identyfikator zamówienia
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Szczegóły przesyłki
+        '404':
+          description: Zamówienie o podanym identyfikatorze nie istnieje
+
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer:
+          type: object
+        senderAddress:
+          type: object
+        receiverAddress:
+          type: object
+        packageType:
+          type: string
+        packageSize:
+          type: string
+        shipment:
+          type: object
+    Driver:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+        city:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+        driver:
+          type: object
+        order:
+          type: object
+        departureTime:
+          type: string
+          format: date
+        arrivalTime:
+          type: string
+          format: date

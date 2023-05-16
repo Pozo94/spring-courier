@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class CustomerDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")

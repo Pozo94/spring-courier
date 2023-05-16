@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Driver {
+public class DriverDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

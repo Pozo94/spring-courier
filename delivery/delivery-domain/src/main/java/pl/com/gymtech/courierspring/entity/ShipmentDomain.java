@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Shipment {
+public class ShipmentDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,6 @@ public class Shipment {
 
     @Column(name = "driver_id", nullable = false)
     private Long driverId;
-
-    @Column(name = "vehicle_id", nullable = false)
-    private Long vehicleId;
 
     @Column(name = "departure_time", nullable = false)
     private Date departureTime;
