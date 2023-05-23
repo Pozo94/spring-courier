@@ -1,6 +1,7 @@
 package pl.com.gymtech.courierspring.service;
 
 import org.apache.tomcat.jni.Address;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.com.gymtech.courierspring.entity.AddressDomain;
 import pl.com.gymtech.courierspring.repository.AddressRepository;
@@ -10,8 +11,9 @@ import java.util.List;
 
 @Service
 public class AddressService {
-    private AddressRepository addressRepository;
 
+    private AddressRepository addressRepository;
+    @Autowired
     public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }

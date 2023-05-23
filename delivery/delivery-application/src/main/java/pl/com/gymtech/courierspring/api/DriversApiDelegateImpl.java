@@ -1,5 +1,6 @@
 package pl.com.gymtech.courierspring.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.com.gymtech.courierspring.entity.DriverDomain;
@@ -13,7 +14,7 @@ import java.util.List;
 public class DriversApiDelegateImpl implements DriversApiDelegate{
 
     private DriverService driverService;
-
+    @Autowired
     public DriversApiDelegateImpl(DriverService driverService) {
         this.driverService = driverService;
     }

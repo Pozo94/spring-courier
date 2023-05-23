@@ -2,7 +2,6 @@ package pl.com.gymtech.courierspring.api;
 
 import pl.com.gymtech.courierspring.entity.DriverDomain;
 import pl.com.gymtech.courierspring.model.Driver;
-import pl.com.gymtech.courierspring.model.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;

@@ -15,10 +15,13 @@
         <module>delivery-application</module>
         <module>delivery-infrastructure</module>
         <module>delivery-domain</module>
+        <module>delivery-schema</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
+
     </properties>
 
     <dependencies>
