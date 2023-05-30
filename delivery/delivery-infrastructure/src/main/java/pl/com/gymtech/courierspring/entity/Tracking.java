@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "shipments")
+@Table(name = "tracking")
 @AllArgsConstructor
 @Getter
 @Setter

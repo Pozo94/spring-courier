@@ -45,9 +45,10 @@ CREATE TABLE shipments
 CREATE TABLE tracking
 (
     id          VARCHAR(50) PRIMARY KEY NOT NULL,
-    location    VARCHAR(255)            NOT NULL,
-    description VARCHAR(255)            NOT NULL,
-    event_type  VARCHAR(50)             NOT NULL,
-    event_time  DATETIME                NOT NULL
-
+    order_id    VARCHAR(50),
+    location    VARCHAR(255),
+    description VARCHAR(255),
+    event_type  VARCHAR(50),
+    event_time  DATETIME,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );

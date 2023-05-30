@@ -1,0 +1,6 @@
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('1','1','Warszawa','ul.Wspólna 5 Kraków','Box','Small','2022-08-22','Order received');
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('2','2','Warszawa','ul.Wspólna 5 Warszawa','Box','Small','2023-04-23','Order received');
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('3','3','Warszawa','ul.Wspólna 5 Kutno','Box','Small','2022-06-23','Order received');
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('4','1','Warszawa','ul.Wspólna 5 Kraków','Box','Medium','2023-08-22','Order received');
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('5','2','Warszawa','ul.Wspólna 5 Warszawa','Box','Medium','2023-04-23','Order received');
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status) VALUES ('6','3','Warszawa','ul.Wspólna 5 Kutno','Box','Medium','2022-06-23','Order received');

@@ -31,23 +31,24 @@ CREATE TABLE drivers
     phone      VARCHAR(20)             NOT NULL
 
 );
+
+CREATE TABLE tracking
+(
+    id          VARCHAR(50) PRIMARY KEY NOT NULL,
+    order_id    VARCHAR(50),
+    location    VARCHAR(255),
+    description VARCHAR(255),
+    event_type  VARCHAR(50),
+    event_time  DATETIME,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);
 CREATE TABLE shipments
 (
-    shipment_id    VARCHAR(50) PRIMARY KEY NOT NULL,
+    id    VARCHAR(50) PRIMARY KEY NOT NULL,
     order_id       VARCHAR(50),
     driver_id      VARCHAR(50),
-    vehicle_id     VARCHAR(50),
     departure_time DATETIME,
     arrival_time   DATETIME,
     FOREIGN KEY (order_id) REFERENCES orders (id),
     FOREIGN KEY (driver_id) REFERENCES drivers (id)
-);
-CREATE TABLE tracking
-(
-    id          VARCHAR(50) PRIMARY KEY NOT NULL,
-    location    VARCHAR(255)            NOT NULL,
-    description VARCHAR(255)            NOT NULL,
-    event_type  VARCHAR(50)             NOT NULL,
-    event_time  DATETIME                NOT NULL
-
 );

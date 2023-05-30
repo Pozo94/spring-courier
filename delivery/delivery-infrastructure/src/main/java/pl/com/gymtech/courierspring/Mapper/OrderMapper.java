@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class OrderMapper {
+    @Mapping(source = "customer.id", target = "customerId")
     public abstract OrderDTO orderToOrderDTO(Order order);
     @Mapping(target = "id", ignore = true)
     public abstract Order orderDTOToOrder(OrderDTO orderDTO);

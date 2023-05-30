@@ -18,10 +18,11 @@ public class OrderService {
     OrderMapper orderMapper;
     TrackingService trackingService;
 
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, OrderMapper orderMapper, TrackingService trackingService) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.orderMapper = orderMapper;
+        this.trackingService = trackingService;
     }
 
     public List<OrderDTO> getCustomerOrders(String customerId){

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface TrackingRepository extends CrudRepository<Tracking,String> {
 
-    Tracking save(Tracking entity);
+    Tracking save(Tracking tracking);
     Optional<Tracking> findByOrderId(String s);
 
 

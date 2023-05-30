@@ -10,9 +10,15 @@ import java.util.List;
 
 @Service
 public class DriverDelegateImpl implements DriversApiDelegate {
-    DriverService driverService;
+    private DriverService driverService;
+
+    public DriverDelegateImpl(DriverService driverService) {
+        this.driverService = driverService;
+    }
+
     @Override
     public ResponseEntity<DriverDTO> createDriver(DriverDTO driverDTO) {
+
         return ResponseEntity.ok(driverService.createDriver(driverDTO));
     }
 

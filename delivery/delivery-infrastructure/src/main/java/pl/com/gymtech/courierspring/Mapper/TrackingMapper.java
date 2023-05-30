@@ -8,7 +8,7 @@ import pl.com.gymtech.courierspring.entity.Tracking;
 @Mapper(componentModel = "spring")
 public abstract class TrackingMapper {
 
-
+    @Mapping(source = "order.id", target = "orderId")
     public abstract TrackingDTO trackingToTrackingDTO(Tracking tracking);
     @Mapping(target = "id", ignore = true)
     public abstract Tracking trackingDTOToTracking(TrackingDTO trackingDTO);
