@@ -34,4 +34,13 @@ public class Tracking {
     public Tracking() {
         id = UUID.randomUUID().toString();
     }
+
+    public Tracking(Order order, String eventType, LocalDate eventTime, String location, String description) {
+        this.id=UUID.randomUUID().toString();
+        this.order = order;
+        this.eventType = eventType;
+        this.eventTime = eventTime;
+        this.location = location;
+        this.description = description;
+    }
 }

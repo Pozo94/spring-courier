@@ -1,6 +1,7 @@
 package pl.com.gymtech.courierspring.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.com.gymtech.courierspring.Mapper.CustomerMapper;
 import pl.com.gymtech.courierspring.Mapper.CustomerMapperImpl;
 import pl.com.gymtech.courierspring.dto.CustomerDTO;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class CustomerService {
 
     CustomerRepository customerRepository;
@@ -24,6 +26,7 @@ public class CustomerService {
         this.customerMapper = customerMapper;
     }
 
+    @Transactional
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
         Customer customer = new Customer(customerDTO.getFirstName(), customerDTO.getLastName(), customerDTO.getEmail(), customerDTO.getPhone(), customerDTO.getAddress());
         customerRepository.save(customer);
@@ -35,6 +38,7 @@ public class CustomerService {
     public List<CustomerDTO> getAllCustomers(){
         return customerMapper.CustomerToCustomerDTO(customerRepository.findAll());
     }
+    @Transactional
     public CustomerDTO updateCustomer(String id, CustomerDTO updatedCustomer){
         Customer customer= customerRepository.findById(id).orElseThrow();
         customer.setFirstName(updatedCustomer.getFirstName());
@@ -44,6 +48,7 @@ public class CustomerService {
         customer.setPhone(updatedCustomer.getPhone());
         return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
     }
+    @Transactional
     public void deleteCustomer(String id){
         customerRepository.deleteById(id);
 

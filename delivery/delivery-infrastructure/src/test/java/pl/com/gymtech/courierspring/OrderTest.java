@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -24,10 +24,16 @@ import pl.com.gymtech.courierspring.api.OrdersApiController;
 import pl.com.gymtech.courierspring.dto.CustomerDTO;
 import pl.com.gymtech.courierspring.dto.OrderDTO;
 import pl.com.gymtech.courierspring.dto.TrackingDTO;
+import pl.com.gymtech.courierspring.entity.Customer;
+import pl.com.gymtech.courierspring.entity.Order;
+import pl.com.gymtech.courierspring.entity.Tracking;
+import pl.com.gymtech.courierspring.repository.OrderRepository;
+import pl.com.gymtech.courierspring.repository.TrackingRepository;
 import pl.com.gymtech.courierspring.service.CustomerService;
 import pl.com.gymtech.courierspring.service.OrderService;
 import pl.com.gymtech.courierspring.service.TrackingService;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,7 +48,9 @@ public class OrderTest {
     @Autowired
     private OrdersApiController ordersApiController;
     @Autowired private OrderService orderService;
+    @Autowired private OrderRepository orderRepository;
     @Autowired private TrackingService trackingService;
+    @Autowired private TrackingRepository trackingRepository;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -53,6 +61,7 @@ public class OrderTest {
     }
     @Test
     public void shouldAddOrderTest() throws Exception {
+        assertEquals(orderRepository.count(),6);
         OrderDTO requestBody=new OrderDTO();
         requestBody.setCustomerId("3");
 
@@ -61,12 +70,15 @@ public class OrderTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk());
+        assertEquals(orderRepository.count(),7);
 
 
 
     }
     @Test
     public void shouldGetOrderTest() throws Exception {
+        Order order = orderRepository.findById("1").orElseThrow();
+        assertEquals(order.getSenderAddress(),"Warszawa");
         this.mockMvc
                 .perform(get("/api/orders/{id}", "1"))
                 .andDo(print()).andExpect(status().isOk())
@@ -80,6 +92,7 @@ public class OrderTest {
     }
     @Test
     public void shouldGetAllOrdersTest() throws Exception {
+        assertEquals(orderRepository.count(),6);
         this.mockMvc
                 .perform(get("/api/orders"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -90,6 +103,8 @@ public class OrderTest {
 
     @Test
     public void shouldUpdateOrder() throws Exception {
+        Order order= orderRepository.findById("1").orElseThrow();
+        assertEquals(order.getPackageSize(),"Small");
         OrderDTO requestBody= orderService.getOrderById("1");
         requestBody.setPackageSize("Large");
         this.mockMvc
@@ -102,15 +117,20 @@ public class OrderTest {
                 .andExpect(jsonPath("$.packageSize").value("Large"))
                 .andExpect(jsonPath("$.packageType").value("Box"))
                 .andExpect(jsonPath("$.customerId").value("1"));
+        order=orderRepository.findById("1").orElseThrow();
+        assertEquals(order.getPackageSize(),"Large");
 
     }
     @Test
     public void shouldDeleteOrderTest() throws Exception{
+        assertEquals(orderRepository.count(),6);
         this.mockMvc.perform(delete("/api/orders/{id}","1"))
                 .andExpect(status().isOk());
+        assertEquals(orderRepository.count(),5);
     }
     @Test
     public void shouldGetOrderTrackingTest() throws Exception {
+        assertTrue(trackingRepository.findByOrderId("1").isPresent());
         this.mockMvc
                 .perform(get("/api/orders/{id}/tracking", "1"))
                 .andDo(print()).andExpect(status().isOk())
@@ -122,6 +142,8 @@ public class OrderTest {
     }
     @Test
     public void shouldUpdateOrderTrackingTest() throws Exception {
+        Tracking tracking=trackingRepository.findByOrderId("1").orElseThrow();
+        assertEquals(tracking.getEventType(),"Wysyłka");
         TrackingDTO requestBody= trackingService.getTracking("1");
         requestBody.setEventType("Dostarczono");
         this.mockMvc
@@ -132,7 +154,8 @@ public class OrderTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.eventType").value("Dostarczono"));
 
-
+        tracking=trackingRepository.findByOrderId("1").orElseThrow();
+        assertEquals(tracking.getEventType(),"Dostarczono");
     }
 
     private String asJsonString(Object obj) throws Exception {

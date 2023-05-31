@@ -18,9 +18,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.com.gymtech.courierspring.api.DriversApiController;
 import pl.com.gymtech.courierspring.dto.DriverDTO;
+import pl.com.gymtech.courierspring.entity.Driver;
+import pl.com.gymtech.courierspring.repository.DriverRepository;
 import pl.com.gymtech.courierspring.service.DriverService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,6 +38,7 @@ public class DriverTest {
     @Autowired
     private DriversApiController driversApiController;
     @Autowired private DriverService driverService;
+    @Autowired private DriverRepository driverRepository;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -44,6 +49,8 @@ public class DriverTest {
     }
     @Test
     public void shouldAddDriverTest() throws Exception {
+        assertEquals(driverRepository.count(),3);
+
         DriverDTO requestBody = new DriverDTO();
         requestBody.setFirstName("Antoni");
         requestBody.setLastName("Sobieski");
@@ -55,9 +62,14 @@ public class DriverTest {
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk());
 
+        assertEquals(driverRepository.count(),4);
+
     }
     @Test
     public void shouldGetDriverTest() throws Exception {
+        Driver driver=driverRepository.findById("1").orElseThrow();
+        assertEquals(driver.getFirstName(),"Jan");
+        assertEquals(driver.getLastName(),"Michalik");
         this.mockMvc
                 .perform(get("/api/drivers/{id}", "1"))
                 .andDo(print()).andExpect(status().isOk())
@@ -68,6 +80,7 @@ public class DriverTest {
     }
     @Test
     public void shouldGetAllDriversTest() throws Exception {
+        assertEquals(driverRepository.count(),3);
         this.mockMvc
                 .perform(get("/api/drivers"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -78,6 +91,9 @@ public class DriverTest {
 
     @Test
     public void shouldUpdateDriverTest() throws Exception {
+        Driver driver=driverRepository.findById("1").orElseThrow();
+        assertEquals(driver.getFirstName(),"Jan");
+
         DriverDTO requestBody= driverService.getDriverById("1");
         requestBody.setFirstName("Janusz");
         requestBody.setLastName("Kowalski");
@@ -89,11 +105,19 @@ public class DriverTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.firstName").value("Janusz"))
                 .andExpect(jsonPath("$.lastName").value("Kowalski"));
+
+        driver=driverRepository.findById("1").orElseThrow();
+        assertEquals(driver.getFirstName(),"Janusz");
     }
     @Test
     public void shouldDeleteDriverTest() throws Exception{
+        assertEquals(driverRepository.count(),3);
+
         this.mockMvc.perform(delete("/api/drivers/{id}","1"))
                 .andExpect(status().isOk());
+
+        assertEquals(driverRepository.count(),2);
+
     }
 
     private String asJsonString(Object obj) throws Exception {
