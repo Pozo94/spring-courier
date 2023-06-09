@@ -27,6 +27,9 @@ public class Customer {
 
     private String address;
 
+    @Version
+    private int version;
+
     public Customer() {
         id= UUID.randomUUID().toString();
     }

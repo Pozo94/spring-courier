@@ -1,17 +1,17 @@
 package pl.com.gymtech.courierspring.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.gymtech.courierspring.Mapper.CustomerMapper;
-import pl.com.gymtech.courierspring.Mapper.CustomerMapperImpl;
+import pl.com.gymtech.courierspring.mapper.CustomerMapper;
 import pl.com.gymtech.courierspring.dto.CustomerDTO;
 import pl.com.gymtech.courierspring.dto.OrderDTO;
 import pl.com.gymtech.courierspring.entity.Customer;
 import pl.com.gymtech.courierspring.repository.CustomerRepository;
 
 import java.util.List;
-import java.util.UUID;
 
+@AllArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class CustomerService {
@@ -20,11 +20,6 @@ public class CustomerService {
     OrderService orderService;
     CustomerMapper customerMapper;
 
-    public CustomerService(CustomerRepository customerRepository, OrderService orderService, CustomerMapper customerMapper) {
-        this.customerRepository = customerRepository;
-        this.orderService = orderService;
-        this.customerMapper = customerMapper;
-    }
 
     @Transactional
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
@@ -46,6 +41,7 @@ public class CustomerService {
         customer.setEmail(updatedCustomer.getEmail());
         customer.setAddress(updatedCustomer.getAddress());
         customer.setPhone(updatedCustomer.getPhone());
+
         return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
     }
     @Transactional

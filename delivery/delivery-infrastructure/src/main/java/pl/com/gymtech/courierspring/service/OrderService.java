@@ -1,13 +1,12 @@
 package pl.com.gymtech.courierspring.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.gymtech.courierspring.Mapper.OrderMapper;
-import pl.com.gymtech.courierspring.delegate.OrderDelegateImpl;
+import pl.com.gymtech.courierspring.mapper.OrderMapper;
 import pl.com.gymtech.courierspring.dto.OrderDTO;
 import pl.com.gymtech.courierspring.dto.TrackingDTO;
 import pl.com.gymtech.courierspring.entity.Order;
-import pl.com.gymtech.courierspring.entity.Tracking;
 import pl.com.gymtech.courierspring.repository.CustomerRepository;
 import pl.com.gymtech.courierspring.repository.OrderRepository;
 
@@ -15,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true)
 public class OrderService {
     OrderRepository orderRepository;
@@ -22,12 +22,7 @@ public class OrderService {
     OrderMapper orderMapper;
     TrackingService trackingService;
 
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, OrderMapper orderMapper, TrackingService trackingService) {
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.orderMapper = orderMapper;
-        this.trackingService = trackingService;
-    }
+
 
     public List<OrderDTO> getCustomerOrders(String customerId){
         return  orderMapper.orderToOrderDTO(orderRepository.findByCustomerId(customerId));

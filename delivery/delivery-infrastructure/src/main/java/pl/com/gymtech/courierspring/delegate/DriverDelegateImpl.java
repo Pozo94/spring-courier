@@ -7,6 +7,7 @@ import pl.com.gymtech.courierspring.dto.DriverDTO;
 import pl.com.gymtech.courierspring.service.DriverService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DriverDelegateImpl implements DriversApiDelegate {
@@ -23,8 +24,8 @@ public class DriverDelegateImpl implements DriversApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> deleteDriverById(String id) {
-        driverService.deleteDriver(id);
+    public ResponseEntity<Void> deleteDriverById(UUID id) {
+        driverService.deleteDriver(id.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -34,12 +35,12 @@ public class DriverDelegateImpl implements DriversApiDelegate {
     }
 
     @Override
-    public ResponseEntity<DriverDTO> getDriverById(String id) {
-        return ResponseEntity.ok(driverService.getDriverById(id));
+    public ResponseEntity<DriverDTO> getDriverById(UUID id) {
+        return ResponseEntity.ok(driverService.getDriverById(id.toString()));
     }
 
     @Override
-    public ResponseEntity<DriverDTO> updateDriverById(String id, DriverDTO driverDTO) {
-        return ResponseEntity.ok(driverService.updateDriver(id,driverDTO));
+    public ResponseEntity<DriverDTO> updateDriverById(UUID id, DriverDTO driverDTO) {
+        return ResponseEntity.ok(driverService.updateDriver(id.toString(),driverDTO));
     }
 }

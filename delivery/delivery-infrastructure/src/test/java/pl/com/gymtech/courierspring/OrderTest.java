@@ -53,7 +53,7 @@ public class OrderTest {
     @Autowired private TrackingRepository trackingRepository;
     @Autowired
     private WebApplicationContext webApplicationContext;
-
+    private static final String TEST_ID="93a35482-aa55-4b5d-b53f-68a14e1f6152";
 
     @BeforeEach
     public void setup() throws Exception {
@@ -63,7 +63,7 @@ public class OrderTest {
     public void shouldAddOrderTest() throws Exception {
         assertEquals(orderRepository.count(),6);
         OrderDTO requestBody=new OrderDTO();
-        requestBody.setCustomerId("3");
+        requestBody.setCustomerId(TEST_ID);
 
 
         mockMvc.perform(post("/api/orders/")
@@ -77,16 +77,16 @@ public class OrderTest {
     }
     @Test
     public void shouldGetOrderTest() throws Exception {
-        Order order = orderRepository.findById("1").orElseThrow();
+        Order order = orderRepository.findById(TEST_ID).orElseThrow();
         assertEquals(order.getSenderAddress(),"Warszawa");
         this.mockMvc
-                .perform(get("/api/orders/{id}", "1"))
+                .perform(get("/api/orders/{id}", TEST_ID))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.id").value(TEST_ID))
                 .andExpect(jsonPath("$.packageSize").value("Small"))
                 .andExpect(jsonPath("$.packageType").value("Box"))
-                .andExpect(jsonPath("$.customerId").value("1"));
+                .andExpect(jsonPath("$.customerId").value(TEST_ID));
 
 
     }
@@ -103,58 +103,58 @@ public class OrderTest {
 
     @Test
     public void shouldUpdateOrder() throws Exception {
-        Order order= orderRepository.findById("1").orElseThrow();
+        Order order= orderRepository.findById(TEST_ID).orElseThrow();
         assertEquals(order.getPackageSize(),"Small");
-        OrderDTO requestBody= orderService.getOrderById("1");
+        OrderDTO requestBody= orderService.getOrderById(TEST_ID);
         requestBody.setPackageSize("Large");
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/orders/{id}","1")
+                .perform(MockMvcRequestBuilders.put("/api/orders/{id}",TEST_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.id").value(TEST_ID))
                 .andExpect(jsonPath("$.packageSize").value("Large"))
                 .andExpect(jsonPath("$.packageType").value("Box"))
-                .andExpect(jsonPath("$.customerId").value("1"));
-        order=orderRepository.findById("1").orElseThrow();
+                .andExpect(jsonPath("$.customerId").value(TEST_ID));
+        order=orderRepository.findById(TEST_ID).orElseThrow();
         assertEquals(order.getPackageSize(),"Large");
 
     }
     @Test
     public void shouldDeleteOrderTest() throws Exception{
         assertEquals(orderRepository.count(),6);
-        this.mockMvc.perform(delete("/api/orders/{id}","1"))
+        this.mockMvc.perform(delete("/api/orders/{id}",TEST_ID))
                 .andExpect(status().isOk());
         assertEquals(orderRepository.count(),5);
     }
     @Test
     public void shouldGetOrderTrackingTest() throws Exception {
-        assertTrue(trackingRepository.findByOrderId("1").isPresent());
+        assertTrue(trackingRepository.findByOrderId(TEST_ID).isPresent());
         this.mockMvc
-                .perform(get("/api/orders/{id}/tracking", "1"))
+                .perform(get("/api/orders/{id}/tracking", TEST_ID))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.orderId").value("1"))
+                .andExpect(jsonPath("$.id").value(TEST_ID))
+                .andExpect(jsonPath("$.orderId").value(TEST_ID))
                 .andExpect(jsonPath("$.eventType").value("Wysyłka"))
                 .andExpect(jsonPath("$.location").value("Kraków"));
     }
     @Test
     public void shouldUpdateOrderTrackingTest() throws Exception {
-        Tracking tracking=trackingRepository.findByOrderId("1").orElseThrow();
+        Tracking tracking=trackingRepository.findByOrderId(TEST_ID).orElseThrow();
         assertEquals(tracking.getEventType(),"Wysyłka");
-        TrackingDTO requestBody= trackingService.getTracking("1");
+        TrackingDTO requestBody= trackingService.getTracking(TEST_ID);
         requestBody.setEventType("Dostarczono");
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/orders/{id}/tracking","1")
+                .perform(MockMvcRequestBuilders.put("/api/orders/{id}/tracking",TEST_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.eventType").value("Dostarczono"));
 
-        tracking=trackingRepository.findByOrderId("1").orElseThrow();
+        tracking=trackingRepository.findByOrderId(TEST_ID).orElseThrow();
         assertEquals(tracking.getEventType(),"Dostarczono");
     }
 

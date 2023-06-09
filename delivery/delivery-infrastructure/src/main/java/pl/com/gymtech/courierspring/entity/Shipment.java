@@ -29,6 +29,10 @@ public class Shipment {
 
     private LocalDate deliveryTime;
 
+    @Version
+    private int version;
+
+
     public Shipment() {
         id = UUID.randomUUID().toString();
     }

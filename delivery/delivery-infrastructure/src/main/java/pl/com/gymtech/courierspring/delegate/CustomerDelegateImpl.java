@@ -19,8 +19,8 @@ public class CustomerDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> deleteCustomerById(String id) {
-         customerService.deleteCustomer(id);
+    public ResponseEntity<Void> deleteCustomerById(UUID id) {
+         customerService.deleteCustomer(id.toString());
          return ResponseEntity.ok().build();
     }
 
@@ -30,13 +30,13 @@ public class CustomerDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<CustomerDTO> getCustomerById(String  id) {
-        return ResponseEntity.ok(customerService.getCustomerById(id));
+    public ResponseEntity<CustomerDTO> getCustomerById(UUID  id) {
+        return ResponseEntity.ok(customerService.getCustomerById(id.toString()));
     }
 
     @Override
-    public ResponseEntity<List<OrderDTO>> getCustomerOrders(String id) {
-        return ResponseEntity.ok(customerService.getCustomerOrders(id));
+    public ResponseEntity<List<OrderDTO>> getCustomerOrders(UUID id) {
+        return ResponseEntity.ok(customerService.getCustomerOrders(id.toString()));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CustomerDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<CustomerDTO> updateCustomerById(String id, CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.updateCustomer(id,customerDTO));
+    public ResponseEntity<CustomerDTO> updateCustomerById(UUID id, CustomerDTO customerDTO) {
+        return ResponseEntity.ok(customerService.updateCustomer(id.toString(),customerDTO));
     }
 }

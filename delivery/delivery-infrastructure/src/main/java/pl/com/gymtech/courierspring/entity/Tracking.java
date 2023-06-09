@@ -31,6 +31,8 @@ public class Tracking {
 
     private String description;
 
+    @Version
+    private int version;
     public Tracking() {
         id = UUID.randomUUID().toString();
     }

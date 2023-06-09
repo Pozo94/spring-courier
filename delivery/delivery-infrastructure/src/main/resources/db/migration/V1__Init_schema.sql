@@ -5,7 +5,8 @@ CREATE TABLE customers
     last_name  VARCHAR(50)             NOT NULL,
     email      VARCHAR(100)            NOT NULL,
     phone      VARCHAR(20)             NOT NULL,
-    address    VARCHAR(200)            NOT NULL
+    address    VARCHAR(200)            NOT NULL,
+    version    INT
 );
 
 CREATE TABLE orders
@@ -18,6 +19,7 @@ CREATE TABLE orders
     package_size     VARCHAR(20)             NOT NULL,
     delivery_date    DATE,
     status           VARCHAR(20)             NOT NULL,
+    version    INT,
     FOREIGN KEY (customer_id) REFERENCES customers (id)
 
 );
@@ -28,7 +30,8 @@ CREATE TABLE drivers
     first_name VARCHAR(50)             NOT NULL,
     last_name  VARCHAR(50)             NOT NULL,
     email      VARCHAR(100)            NOT NULL,
-    phone      VARCHAR(20)             NOT NULL
+    phone      VARCHAR(20)             NOT NULL,
+    version    INT
 
 );
 
@@ -39,7 +42,8 @@ CREATE TABLE tracking
     location    VARCHAR(255),
     description VARCHAR(255),
     event_type  VARCHAR(50),
-    event_time  DATETIME,
+    event_time  DATE,
+    version    INT,
     FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 CREATE TABLE shipments
@@ -47,8 +51,9 @@ CREATE TABLE shipments
     id    VARCHAR(50) PRIMARY KEY NOT NULL,
     order_id       VARCHAR(50),
     driver_id      VARCHAR(50),
-    departure_time DATETIME,
-    arrival_time   DATETIME,
+    pickup_time DATE,
+    delivery_time   DATE,
+    version    INT,
     FOREIGN KEY (order_id) REFERENCES orders (id),
     FOREIGN KEY (driver_id) REFERENCES drivers (id)
 );

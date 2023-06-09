@@ -1,4 +1,4 @@
-package pl.com.gymtech.courierspring.Mapper;
+package pl.com.gymtech.courierspring.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

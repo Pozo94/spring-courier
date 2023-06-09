@@ -1,26 +1,21 @@
 package pl.com.gymtech.courierspring.service;
 
-import org.springframework.stereotype.Repository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.gymtech.courierspring.Mapper.TrackingMapper;
+import pl.com.gymtech.courierspring.mapper.TrackingMapper;
 import pl.com.gymtech.courierspring.dto.TrackingDTO;
 import pl.com.gymtech.courierspring.entity.Order;
 import pl.com.gymtech.courierspring.entity.Tracking;
 import pl.com.gymtech.courierspring.repository.TrackingRepository;
 
-import java.time.LocalDate;
-
 @Service
 @Transactional(readOnly = true)
-
+@AllArgsConstructor
 public class TrackingService {
     TrackingRepository trackingRepository;
     TrackingMapper trackingMapper;
-    public TrackingService(TrackingRepository trackingRepository, TrackingMapper trackingMapper) {
-        this.trackingRepository = trackingRepository;
-        this.trackingMapper = trackingMapper;
-    }
+
     @Transactional
     public TrackingDTO createOrderTracking(TrackingDTO trackingDTO, Order order){
         Tracking tracking=new Tracking(order,trackingDTO.getEventType(),trackingDTO.getEventTime(),trackingDTO.getLocation(),trackingDTO.getDescription());

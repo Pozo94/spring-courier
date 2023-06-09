@@ -8,6 +8,7 @@ import pl.com.gymtech.courierspring.dto.TrackingDTO;
 import pl.com.gymtech.courierspring.service.OrderService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderDelegateImpl implements OrdersApiDelegate {
@@ -24,8 +25,8 @@ public class OrderDelegateImpl implements OrdersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> deleteOrderById(String id) {
-        orderService.deleteOrder(id);
+    public ResponseEntity<Void> deleteOrderById(UUID id) {
+        orderService.deleteOrder(id.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -35,22 +36,22 @@ public class OrderDelegateImpl implements OrdersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<OrderDTO> getOrderById(String id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+    public ResponseEntity<OrderDTO> getOrderById(UUID id) {
+        return ResponseEntity.ok(orderService.getOrderById(id.toString()));
     }
 
     @Override
-    public ResponseEntity<TrackingDTO> getOrderTracking(String orderId) {
-        return ResponseEntity.ok(orderService.getOrderTracking(orderId));
+    public ResponseEntity<TrackingDTO> getOrderTracking(UUID orderId) {
+        return ResponseEntity.ok(orderService.getOrderTracking(orderId.toString()));
     }
 
     @Override
-    public ResponseEntity<OrderDTO> updateOrderById(String id, OrderDTO orderDTO) {
-        return ResponseEntity.ok(orderService.updateOrder(id,orderDTO));
+    public ResponseEntity<OrderDTO> updateOrderById(UUID id, OrderDTO orderDTO) {
+        return ResponseEntity.ok(orderService.updateOrder(id.toString(),orderDTO));
     }
 
     @Override
-    public ResponseEntity<TrackingDTO> updateOrderTracking(String orderId,TrackingDTO trackingDTO) {
-        return ResponseEntity.ok(orderService.updateOrderTracking(orderId, trackingDTO));
+    public ResponseEntity<TrackingDTO> updateOrderTracking(UUID orderId,TrackingDTO trackingDTO) {
+        return ResponseEntity.ok(orderService.updateOrderTracking(orderId.toString(), trackingDTO));
     }
 }

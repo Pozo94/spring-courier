@@ -28,6 +28,9 @@ public class Order {
 
     private LocalDate deliveryDate;
 
+    @Version
+    private int version;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;

@@ -42,6 +42,7 @@ public class DriverTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    private static final String TEST_ID="93a35482-aa55-4b5d-b53f-68a14e1f6152";
 
     @BeforeEach
     public void setup() throws Exception {
@@ -67,11 +68,11 @@ public class DriverTest {
     }
     @Test
     public void shouldGetDriverTest() throws Exception {
-        Driver driver=driverRepository.findById("1").orElseThrow();
+        Driver driver=driverRepository.findById(TEST_ID).orElseThrow();
         assertEquals(driver.getFirstName(),"Jan");
         assertEquals(driver.getLastName(),"Michalik");
         this.mockMvc
-                .perform(get("/api/drivers/{id}", "1"))
+                .perform(get("/api/drivers/{id}", TEST_ID))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.firstName").value("Jan"))
@@ -91,14 +92,14 @@ public class DriverTest {
 
     @Test
     public void shouldUpdateDriverTest() throws Exception {
-        Driver driver=driverRepository.findById("1").orElseThrow();
+        Driver driver=driverRepository.findById(TEST_ID).orElseThrow();
         assertEquals(driver.getFirstName(),"Jan");
 
-        DriverDTO requestBody= driverService.getDriverById("1");
+        DriverDTO requestBody= driverService.getDriverById(TEST_ID);
         requestBody.setFirstName("Janusz");
         requestBody.setLastName("Kowalski");
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/drivers/{id}","1")
+                .perform(MockMvcRequestBuilders.put("/api/drivers/{id}",TEST_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk())
@@ -106,14 +107,14 @@ public class DriverTest {
                 .andExpect(jsonPath("$.firstName").value("Janusz"))
                 .andExpect(jsonPath("$.lastName").value("Kowalski"));
 
-        driver=driverRepository.findById("1").orElseThrow();
+        driver=driverRepository.findById(TEST_ID).orElseThrow();
         assertEquals(driver.getFirstName(),"Janusz");
     }
     @Test
     public void shouldDeleteDriverTest() throws Exception{
         assertEquals(driverRepository.count(),3);
 
-        this.mockMvc.perform(delete("/api/drivers/{id}","1"))
+        this.mockMvc.perform(delete("/api/drivers/{id}",TEST_ID))
                 .andExpect(status().isOk());
 
         assertEquals(driverRepository.count(),2);

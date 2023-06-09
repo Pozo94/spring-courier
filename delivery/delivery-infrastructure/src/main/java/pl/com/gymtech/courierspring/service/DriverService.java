@@ -1,8 +1,9 @@
 package pl.com.gymtech.courierspring.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.gymtech.courierspring.Mapper.DriverMapper;
+import pl.com.gymtech.courierspring.mapper.DriverMapper;
 import pl.com.gymtech.courierspring.dto.DriverDTO;
 import pl.com.gymtech.courierspring.entity.Driver;
 import pl.com.gymtech.courierspring.repository.DriverRepository;
@@ -10,15 +11,13 @@ import pl.com.gymtech.courierspring.repository.DriverRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true)
 public class DriverService {
     DriverRepository driverRepository;
     DriverMapper driverMapper;
 
-    public DriverService(DriverRepository driverRepository, DriverMapper driverMapper) {
-        this.driverRepository = driverRepository;
-        this.driverMapper = driverMapper;
-    }
+
     public List<DriverDTO> getAllDrivers(){
         return driverMapper.driverToDriverDTO(driverRepository.findAll());
     }

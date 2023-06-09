@@ -58,6 +58,7 @@ public class CustomerTest {
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
     }
+    private static final String TEST_ID="93a35482-aa55-4b5d-b53f-68a14e1f6152";
     @Test
     public void shouldAddCustomerTest() throws Exception {
 
@@ -80,10 +81,10 @@ public class CustomerTest {
     }
     @Test
     public void shouldGetCustomerTest() throws Exception {
-        Customer customer = customerRepository.findById("1").orElseThrow();
+        Customer customer = customerRepository.findById(TEST_ID).orElseThrow();
         assertEquals(customer.getFirstName(),"Jacek");
         this.mockMvc
-                .perform(get("/api/customers/{id}", "1"))
+                .perform(get("/api/customers/{id}", TEST_ID))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.firstName").value("Jacek"));
@@ -106,13 +107,13 @@ public class CustomerTest {
 
     @Test
     public void shouldUpdateCustomerTest() throws Exception {
-        Customer customer = customerRepository.findById("1").orElseThrow();
+        Customer customer = customerRepository.findById(TEST_ID).orElseThrow();
         assertEquals(customer.getFirstName(),"Jacek");
-        CustomerDTO requestBody= customerService.getCustomerById("1");
+        CustomerDTO requestBody= customerService.getCustomerById(TEST_ID);
         requestBody.setFirstName("Jan");
         requestBody.setLastName("Pozowski");
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/customers/{id}","1")
+                .perform(MockMvcRequestBuilders.put("/api/customers/{id}",TEST_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestBody)))
                 .andExpect(status().isOk())
@@ -120,27 +121,27 @@ public class CustomerTest {
                 .andExpect(jsonPath("$.firstName").value("Jan"))
                 .andExpect(jsonPath("$.lastName").value("Pozowski"));
 
-        customer=customerRepository.findById("1").orElseThrow();
+        customer=customerRepository.findById(TEST_ID).orElseThrow();
         assertEquals(customer.getFirstName(),"Jan");
     }
 
     @Test
     public void shouldDeleteCustomerTest() throws Exception{
         assertEquals(customerRepository.count(),3);
-        this.mockMvc.perform(delete("/api/customers/{id}","1"))
+        this.mockMvc.perform(delete("/api/customers/{id}",TEST_ID))
                 .andExpect(status().isOk());
         assertEquals(customerRepository.count(),2);
     }
     @Test
     public void shouldGetCustomerOrdersTest() throws Exception {
 
-            long count = orderRepository.findByCustomerId("1").size();
+            long count = orderRepository.findByCustomerId(TEST_ID).size();
 
             if (count != 2) {
                 throw new AssertionError("Oczekiwano 2 rekordów w bazie danych, ale znaleziono: " + count);
             }
             this.mockMvc
-                    .perform(get("/api/customers/{id}/orders","1"))
+                    .perform(get("/api/customers/{id}/orders",TEST_ID))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(2)));
 

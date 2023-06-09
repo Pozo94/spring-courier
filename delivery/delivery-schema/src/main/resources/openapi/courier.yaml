@@ -46,6 +46,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Szczegóły klienta
@@ -65,6 +66,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -90,6 +92,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
 
       responses:
         '204':
@@ -136,6 +139,7 @@ paths:
           description: Identyfikator zamówienia
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -155,6 +159,7 @@ paths:
           description: Identyfikator zamówienia
           schema:
             type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -180,6 +185,7 @@ paths:
           description: Identyfikator zamówienia
           schema:
             type: string
+            format: uuid
       responses:
         '204':
           description: Usunięto
@@ -196,6 +202,7 @@ paths:
           description: Identyfikator użytkownika
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -249,6 +256,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Szczegóły kierowcy
@@ -268,6 +276,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -295,6 +304,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '204':
           description: Kierowca został usunięty
@@ -312,6 +322,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Szczegóły przesyłki
@@ -337,6 +348,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Zaktualizowano dane przesyłki

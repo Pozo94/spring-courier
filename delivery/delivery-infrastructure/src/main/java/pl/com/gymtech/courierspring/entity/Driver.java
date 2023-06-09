@@ -22,6 +22,8 @@ public class Driver {
 
     private String phone;
 
+    @Version
+    private int version;
 
     public Driver() {
         id = UUID.randomUUID().toString();
