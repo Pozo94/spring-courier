@@ -43,4 +43,5 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.PRECONDITION_FAILED);
     }
 
+
 }
