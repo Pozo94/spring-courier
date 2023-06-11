@@ -5,3 +5,4 @@
 /.idea
 /delivery/delivery-application/.openapi-generator
 *.iml
+*.env

@@ -9,6 +9,7 @@ import pl.com.gymtech.courierspring.entity.Driver;
 import pl.com.gymtech.courierspring.repository.DriverRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class DriverService {
     }
     @Transactional
     public DriverDTO updateDriver(String id,DriverDTO driverDTO){
-        Driver driver=driverRepository.findById(id).orElseThrow();
+        Driver driver=driverRepository.findById(id).orElseThrow(()->new NoSuchElementException("Driver with id: "+id+ " not found!" ));
         driver.setFirstName(driverDTO.getFirstName());
         driver.setLastName(driverDTO.getLastName());
         driver.setEmail(driverDTO.getEmail());
@@ -40,7 +41,7 @@ public class DriverService {
         return driverMapper.driverToDriverDTO(driverRepository.save(driver));
     }
     public DriverDTO getDriverById(String id){
-       return driverMapper.driverToDriverDTO(driverRepository.findById(id).orElseThrow());
+       return driverMapper.driverToDriverDTO(driverRepository.findById(id).orElseThrow(()->new NoSuchElementException("Driver with id: "+id+ " not found!" )));
     }
 
 

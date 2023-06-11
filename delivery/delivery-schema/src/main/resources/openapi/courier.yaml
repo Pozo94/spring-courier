@@ -363,6 +363,10 @@ components:
   schemas:
     OrderDTO:
       type: object
+      required:
+        - customerId
+        - senderAddress
+        - receiverAddress
       properties:
         id:
           type: string
@@ -384,6 +388,10 @@ components:
 
     DriverDTO:
       type: object
+      required:
+        - firstName
+        - lastName
+        - phone
       properties:
         id:
           type: string
@@ -398,6 +406,11 @@ components:
 
     CustomerDTO:
       type: object
+      required:
+        - firstName
+        - lastName
+        - address
+        - phone
       properties:
         id:
           type: string
@@ -414,11 +427,17 @@ components:
 
     TrackingDTO:
       type: object
+      required:
+        - orderId
+        - eventType
+        - eventTime
       properties:
         id:
           type: string
+          format: uuid
         orderId:
           type: string
+          format: uuid
         eventType:
           type: string
         eventTime:
@@ -427,4 +446,14 @@ components:
         location:
           type: string
         description:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
           type: string

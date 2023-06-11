@@ -9,6 +9,8 @@ import pl.com.gymtech.courierspring.entity.Order;
 import pl.com.gymtech.courierspring.entity.Tracking;
 import pl.com.gymtech.courierspring.repository.TrackingRepository;
 
+import java.util.NoSuchElementException;
+
 @Service
 @Transactional(readOnly = true)
 @AllArgsConstructor
@@ -24,14 +26,14 @@ public class TrackingService {
     }
 
     public TrackingDTO getTracking(String id){
-        return trackingMapper.trackingToTrackingDTO(trackingRepository.findByOrderId(id).orElseThrow());
+        return trackingMapper.trackingToTrackingDTO(trackingRepository.findByOrderId(id).orElseThrow(()->new NoSuchElementException("Tracking with id: "+id+ " not found!" )));
 
     }
     @Transactional
 
     public TrackingDTO updateTracking(String id,TrackingDTO trackingDTO){
 
-        Tracking tracking= trackingRepository.findById(id).orElseThrow();
+        Tracking tracking= trackingRepository.findById(id).orElseThrow(()->new NoSuchElementException("Tracking with id: "+id+ "not found!" ));
         tracking.setEventTime(trackingDTO.getEventTime());
         tracking.setDescription(trackingDTO.getDescription());
         tracking.setEventType(trackingDTO.getEventType());

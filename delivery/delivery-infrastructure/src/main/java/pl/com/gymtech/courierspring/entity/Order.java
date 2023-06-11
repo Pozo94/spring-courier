@@ -48,4 +48,24 @@ public class Order {
         this.status = status;
 
     }
+
+    public Order(String id, String status) {
+        this.id = id;
+        this.status=status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", senderAddress='" + senderAddress + '\'' +
+                ", receiverAddress='" + receiverAddress + '\'' +
+                ", packageType='" + packageType + '\'' +
+                ", packageSize='" + packageSize + '\'' +
+                ", status='" + status + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", version=" + version +
+                ", customer=" + customer +
+                '}';
+    }
 }

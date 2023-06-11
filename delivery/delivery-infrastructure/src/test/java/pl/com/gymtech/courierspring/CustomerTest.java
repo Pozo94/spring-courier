@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,13 +25,10 @@ import pl.com.gymtech.courierspring.repository.OrderRepository;
 import pl.com.gymtech.courierspring.service.CustomerService;
 
 
+import javax.persistence.OptimisticLockException;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 
-@SqlGroup(@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,scripts = { "classpath:/drop_schema.sql", "classpath:/create_schema.sql","classpath:/insertCustomer_schema.sql","classpath:/insertOrder_schema.sql"})
+@SqlGroup(@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,scripts = {"classpath:/drop-schema.sql", "classpath:/create-schema.sql", "classpath:/insert-Customer-schema.sql", "classpath:/insert-Order-schema.sql"})
 )
 public class CustomerTest {
     private MockMvc mockMvc;
@@ -145,6 +143,16 @@ public class CustomerTest {
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(2)));
 
+    }
+    @Test
+    public void optimisticLockingTest(){
+        Customer customer=customerRepository.findById("93a35482-aa55-4b5d-b53f-68a14e1f6152").orElseThrow();
+        Customer customer1=customerRepository.findById("93a35482-aa55-4b5d-b53f-68a14e1f6152").orElseThrow();
+        customer.setFirstName("Jan");
+        customerRepository.save(customer);
+        customer1.setFirstName("Mateusz");
+
+        assertThrows(ObjectOptimisticLockingFailureException.class,()->customerRepository.save(customer1));
     }
 
     private String asJsonString(Object obj) throws Exception {

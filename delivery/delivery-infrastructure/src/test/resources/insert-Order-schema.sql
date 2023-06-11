@@ -1,0 +1,8 @@
+
+
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('93a35482-aa55-4b5d-b53f-68a14e1f6152','93a35482-aa55-4b5d-b53f-68a14e1f6152','Warszawa','ul.Wspolna 5 Krakow','Box','Small','2022-08-22','Delivery',0);
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('2e2b7c51-0423-4b7a-a9b3-9f196b93c5f6','2e2b7c51-0423-4b7a-a9b3-9f196b93c5f6','Warszawa','ul.Wspolna 5 Warszawa','Box','Small','2023-04-23','Delivery',0);
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('03f01b8a-3567-4d03-84f9-2eb3a22c5fd1','03f01b8a-3567-4d03-84f9-2eb3a22c5fd1','Warszawa','ul.Wspólna 5 Kutno','Box','Small','2022-06-23','Delivery',0);
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('95ddc30f-9a11-4a26-a2b4-69b89fe3a347','93a35482-aa55-4b5d-b53f-68a14e1f6152','Warszawa','ul.Wspólna 5 Krakow','Box','Medium','2023-08-22','Delivery',0);
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('b179d913-918c-4b39-9426-d8c586dcda01','2e2b7c51-0423-4b7a-a9b3-9f196b93c5f6','Warszawa','ul.Wspolna 5 Warszawa','Box','Medium','2023-04-23','Delivery',0);
+INSERT INTO orders (id,customer_id,sender_address,receiver_address,package_type,package_size,delivery_date,status,version) VALUES ('a5fb1a1c-218b-4292-8b41-2df23f4466be','03f01b8a-3567-4d03-84f9-2eb3a22c5fd1','Warszawa','ul.Wspolna 5 Kutno','Box','Medium','2022-06-23','Delivery',0);

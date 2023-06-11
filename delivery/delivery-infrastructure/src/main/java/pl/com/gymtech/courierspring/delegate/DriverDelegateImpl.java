@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 public class DriverDelegateImpl implements DriversApiDelegate {
-    private DriverService driverService;
+    private final DriverService driverService;
 
     public DriverDelegateImpl(DriverService driverService) {
         this.driverService = driverService;

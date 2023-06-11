@@ -1,9 +1,20 @@
 version: '3'
 services:
-  mysql:
-    image: mysql
-    container_name: courier-mysql-container
+  web:
+    build: .
     ports:
-      - '3306:3306'
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - "5000:5000"
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - ./webapp:/opt/webapp
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  WORD=root
