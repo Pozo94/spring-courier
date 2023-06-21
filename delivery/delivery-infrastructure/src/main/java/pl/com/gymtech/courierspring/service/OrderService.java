@@ -87,7 +87,7 @@ public class OrderService {
         return orderMapper.orderToOrderDTO(orderRepository.findFirstByStatus(status));
     }
     @Transactional
-    @Scheduled(fixedDelay = 1000) // Przykładowy interwał czasowy - 1 sekunda
+   // @Scheduled(fixedDelay = 1000) // Przykładowy interwał czasowy - 1 sekunda
     public void updateOrderStatus() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         OrderDTO order = findFirstByStatus("Delivery");
