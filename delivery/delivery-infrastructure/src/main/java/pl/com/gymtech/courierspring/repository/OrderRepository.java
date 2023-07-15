@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import pl.com.gymtech.courierspring.entity.Order;
 
 import javax.persistence.LockModeType;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Repository
@@ -18,4 +20,7 @@ public interface OrderRepository extends CrudRepository<Order,String> {
     List<Order> findByCustomerId(String id);
 
     Order findFirstByStatus(String status);
+
+    List<Order> findByDeliveryDateBetween(LocalDate startDate, LocalDate endDate);
+
 }

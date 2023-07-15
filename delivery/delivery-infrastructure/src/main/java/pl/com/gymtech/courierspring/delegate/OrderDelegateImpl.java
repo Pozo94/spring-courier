@@ -7,6 +7,8 @@ import pl.com.gymtech.courierspring.dto.OrderDTO;
 import pl.com.gymtech.courierspring.dto.TrackingDTO;
 import pl.com.gymtech.courierspring.service.OrderService;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,5 +55,12 @@ public class OrderDelegateImpl implements OrdersApiDelegate {
     @Override
     public ResponseEntity<TrackingDTO> updateOrderTracking(UUID orderId,TrackingDTO trackingDTO) {
         return ResponseEntity.ok(orderService.updateOrderTracking(orderId.toString(), trackingDTO));
+    }
+
+    @Override
+    public ResponseEntity<List<OrderDTO>> getOrdersReport(LocalDate start, LocalDate end) {
+        start=LocalDate.of(2022,1,1);
+        end=LocalDate.now();
+        return ResponseEntity.ok(orderService.sendReport(start,end));
     }
 }

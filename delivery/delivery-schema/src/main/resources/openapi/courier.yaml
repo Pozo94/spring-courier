@@ -128,6 +128,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrderDTO'
+  /orders/report:
+    get:
+      summary: Pobierz zamówienia z danego zakresu
+      operationId: getOrdersReport
+      parameters:
+        - name: start
+          in: query
+          description: Identyfikator klienta do usunięcia
+          required: true
+          schema:
+            type: string
+            format: date
+
+        - name: end
+          in: query
+          description: Identyfikator klienta do usunięcia
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDTO'
+    post:
+      summary: Pobierz raport
+      operationId: download report
+
+
+      responses:
+        '201':
+          description: Pobrano
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDTO'
   /orders/{id}:
     get:
       summary: Pobierz zamówienie o określonym identyfikatorze
