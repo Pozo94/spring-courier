@@ -128,6 +128,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrderDTO'
+  /db/download/{file:.+}:
+    get:
+      summary: Pobierz backup bazy danych
+      operationId: getDbBackup
+      parameters:
+        - name: file
+          in: path
+          description: nazwa pliku do pobrania
+          required: true
+          schema:
+            type: string
+            pattern: ".+"
+      responses:
+        '200':
+          description: 'ok'
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /db/create/{file}:
+    get:
+      summary: Stwórz backup bazy danych
+      operationId: createDbBackup
+      responses:
+        '200':
+          description: 'ok'
+
+      parameters:
+        - name: file
+          in: path
+          description: nazwa pliku
+          required: true
+          schema:
+            type: string
+
+
   /orders/report:
     get:
       summary: Pobierz zamówienia z danego zakresu
@@ -135,7 +172,7 @@ paths:
       parameters:
         - name: start
           in: query
-          description: Identyfikator klienta do usunięcia
+          description: Początek zakresu
           required: true
           schema:
             type: string
@@ -143,7 +180,7 @@ paths:
 
         - name: end
           in: query
-          description: Identyfikator klienta do usunięcia
+          description: Koniec zakresu
           required: true
           schema:
             type: string
@@ -158,18 +195,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OrderDTO'
-    post:
-      summary: Pobierz raport
-      operationId: download report
 
-
-      responses:
-        '201':
-          description: Pobrano
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderDTO'
   /orders/{id}:
     get:
       summary: Pobierz zamówienie o określonym identyfikatorze

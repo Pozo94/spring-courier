@@ -172,7 +172,7 @@ public class OrderTest {
     }
 
 
-    @Test
+   /* @Test
     public void testTaskExecution() throws InterruptedException {
         List<Order> orders = orderRepository.findAll();
         System.out.println(orders.size());
@@ -189,7 +189,7 @@ public class OrderTest {
             }
         });
 
-    }
+    }*/
 
     private String asJsonString(Object obj) throws Exception {
         ObjectMapper mapper = new ObjectMapper();

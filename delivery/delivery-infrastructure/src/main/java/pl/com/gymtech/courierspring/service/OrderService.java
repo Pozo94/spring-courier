@@ -1,16 +1,12 @@
 package pl.com.gymtech.courierspring.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.core.util.Json;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Lock;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.gymtech.courierspring.config.JmsProducer;
+import pl.com.gymtech.courierspring.handler.OrderReportProducer;
 import pl.com.gymtech.courierspring.mapper.OrderMapper;
 import pl.com.gymtech.courierspring.dto.OrderDTO;
 import pl.com.gymtech.courierspring.dto.TrackingDTO;
@@ -33,7 +29,7 @@ public class OrderService {
     CustomerRepository customerRepository;
     OrderMapper orderMapper;
     TrackingService trackingService;
-    JmsProducer jmsProducer;
+    OrderReportProducer orderReportProducer;
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -105,8 +101,12 @@ public class OrderService {
     }
 
     public List<OrderDTO> sendReport(LocalDate start, LocalDate end) {
+        if(start.isAfter(end)){
+            throw new IllegalArgumentException("The start date cannot be later than the end date!");
+        }
+        ;
         List<OrderDTO> report = getOrdersBetweenDate(start, end);
-        jmsProducer.sendMessage(report);
+        orderReportProducer.sendOrderReport(report);
 
         return report;
 
