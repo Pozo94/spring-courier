@@ -45,6 +45,8 @@ class SecurityConfig {
                 .antMatchers(HttpMethod.GET,"/api/customers/").hasRole("USER")
                 .antMatchers(HttpMethod.GET,"/api/orders**").hasRole("ADMIN")
                 .antMatchers("/api/orders/report*").hasAnyAuthority()
+                .antMatchers("/api/db/create*").hasAnyAuthority()
+                .antMatchers("/api/orders/download*").hasAnyAuthority()
                 .antMatchers(HttpMethod.GET,"/api/customers**").hasRole("USER")
                 .anyRequest()
                 .permitAll();
